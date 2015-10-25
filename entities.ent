@@ -1,15 +1,15 @@
 <!ENTITY RepairMailSell '
 	<CustomBehavior File="Message" Text="Bag slots are low, we need to free up some space!" LogColor="Lime" />
 	<If Condition="Me.IsAlliance" >
-		<MoveTo &AllyRepairMailSellLocation; />
+		&AllyRepairMailSellLocation;
 	<ElseIf Condition="Me.IsHorde">
-		<MoveTo &HordeRepairMailSellLocation; />
+		&HordeRepairMailSellLocation;
 	</ElseIf>
 	</If>'
 >
 <!ENTITY RepairSell '
 	<CustomBehavior File="Message" Text="Durability is low, we need to repair!" LogColor="Lime" />
-	<MoveTo &NeutralRepairSellLocation; />'
+	&NeutralRepairSellLocation;
 >
 <!ENTITY ForceSetVendor '
 	<If Condition="Me.LowestDurabilityPercent &lt;= &durability;">
