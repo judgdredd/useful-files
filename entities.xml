@@ -1,4 +1,4 @@
-<!DOCTYPE HBProfile 
+<!DOCTYPE MyTest 
 [
 	<!ENTITY RepairMailSell '
 		<CustomBehavior File="Message" Text="Bag slots are low, we need to free up some space!" LogColor="Lime" />
