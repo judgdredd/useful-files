@@ -1,0 +1,41 @@
+<!ENTITY RepairMailSell '
+	<CustomBehavior File="Message" Text="Bag slots are low, we need to free up some space!" LogColor="Lime" />
+	<If Condition="Me.IsAlliance" >
+		&AllyRepairMailSellLocation;
+	<ElseIf Condition="Me.IsHorde">
+		&HordeRepairMailSellLocation;
+	</ElseIf>
+	</If>'
+>
+<!ENTITY RepairSell '
+	<CustomBehavior File="Message" Text="Durability is low, we need to repair!" LogColor="Lime" />
+	&NeutralRepairSellLocation;
+>
+<!ENTITY ForceSetVendor '
+	<If Condition="Me.LowestDurabilityPercent &lt;= &durability;">
+		<CustomBehavior File="Message" Text="Repairing" LogColor="Lime" />
+		<CustomBehavior File="ForceSetVendor" DoRepair="true" />
+		<CustomBehavior File="WaitTimer" WaitTime="30000" TerminateWhen="Me.LowestDurabilityPercent &gt; &durability;" />
+	</If>
+	<If Condition="Me.FreeBagSlots &lt;= &bagslots;" >
+		<CustomBehavior File="Message" Text="Mailing/Selling Items" LogColor="Lime" />
+		<CustomBehavior File="ForceSetVendor" DoMail="true" DoSell="true" />
+		<CustomBehavior File="WaitTimer" WaitTime="30000" TerminateWhen="Me.FreeBagSlots &gt; &bagslots;" />
+	</If>'
+>
+<!ENTITY CheckRepairMailSell '
+	<!-- Handle Mail and Repairs -->
+	<While Condition="(Me.FreeBagSlots &lt;= &bagslots;) || (Me.LowestDurabilityPercent &lt;= &durability;)" >
+
+	<If Condition="(Me.FreeBagSlots &lt;= &bagslots;)" >
+		&RepairMailSell;
+	</If>
+
+	<If Condition="(Me.LowestDurabilityPercent &lt;= &durability;) &amp;&amp; (Me.FreeBagSlots &gt; &bagslots;)" >
+		&RepairSell;
+	</If>
+
+	&ForceSetVendor;
+
+	</While>'
+>
