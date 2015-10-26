@@ -9,7 +9,7 @@
 >
 <!ENTITY RepairSell '
 	<CustomBehavior File="Message" Text="Durability is low, we need to repair!" LogColor="Lime" />
-	&NeutralRepairSellLocation;
+	&NeutralRepairSellLocation;'
 >
 <!ENTITY ForceSetVendor '
 	<If Condition="Me.LowestDurabilityPercent &lt;= &durability;">
@@ -38,4 +38,31 @@
 	&ForceSetVendor;
 
 	</While>'
+>
+<!ENTITY DestinationMapId "962" >
+<!ENTITY DestinationZoneId "6723" >
+<!ENTITY UseGarrisonHearth '
+	<CustomBehavior File="RunCode" Code="Logging.Write(System.Windows.Media.Colors.Yellow, &quot;[Notification]: Using our Garrison Hearthstone.&quot;);" />
+	<CustomBehavior File="ForcedDismount" />
+	<While Condition="Me.MapId != &DestinationMapId;" >
+		<!-- Use Garrison Hearth -->
+		<CustomBehavior File="Misc\RunLua" Lua="UseItemByName(110560);" WaitTime="500" />
+		<CustomBehavior File="WaitTimer" WaitTime="50000" TerminateWhen="Me.MapId == &DestinationMapId; || Me.Combat || !Me.IsCasting" />
+	</While>'
+>
+<!ENTITY GarrisonHearthCdMins '
+	Me.BagItems.FirstOrDefault(h => h.Entry == 110560).CooldownTimeLeft.TotalMinutes
+'
+>
+<!ENTITY GarrisonHearthCdMs '
+	Me.BagItems.FirstOrDefault(h => h.Entry == 110560).CooldownTimeLeft.TotalMilliseconds
+'
+>
+<!ENTITY GarrisonHearthCdSecs '
+	Me.BagItems.FirstOrDefault(h => h.Entry == 110560).CooldownTimeLeft.TotalSeconds
+'
+>
+<!ENTITY LogGarrisonHearthCd '
+	<CustomBehavior File="RunCode" Code="Logging.Write(System.Windows.Media.Colors.Yellow, &quot;[Notification]: Garrison Hearthstone on cooldown - Time remaining &quot; + &GarrisonHearthCdMins; + &quot; minute(s) &quot; + &GarrisonHearthCdSecs; + &quot; second(s) &quot;);" />
+'
 >
